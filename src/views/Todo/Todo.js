@@ -30,8 +30,7 @@ export default function Todo() {
   };
 
   const handleToggle = async (todo) => {
-    const data = await toggleCompleted(todo.id, !todo.is_complete);
-    console.log(data);
+    await toggleCompleted(todo.id, !todo.is_complete);
     const updatedTodos = todos.map((item) =>
       item.id === todo.id ? { ...todo, is_complete: !todo.is_complete } : item
     );

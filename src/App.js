@@ -9,7 +9,6 @@ import './App.css';
 
 function App() {
   const [currentUser, setCurrentUser] = useState(getUser());
-  console.log(currentUser);
   const logoutUser = async () => {
     await logout();
     setCurrentUser(null);
