@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { getUser, logout } from './services/users';
 import Auth from '../src/views/Auth/Auth';
 
+import Todo from './views/Todo/Todo';
+
 import './App.css';
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
           <Route exact path="/">
             {currentUser && (
               <>
-                <p>current logged in user</p>
+                <Todo />
                 <button onClick={logoutUser}>Log Out</button>
               </>
             )}
