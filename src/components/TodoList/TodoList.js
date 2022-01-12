@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TodoList({ task }) {
+export default function TodoList({ task, message }) {
   return (
     <div>
       <input type="checkbox" />

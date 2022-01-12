@@ -1,12 +1,14 @@
 import TodoList from '../../components/TodoList/TodoList';
-import { createTodo } from '../../services/users';
+import { createTodo } from '../../services/todos';
 import { useEffect, useState } from 'react';
-import { fetchTodos } from '../../services/users';
+import { fetchTodos } from '../../services/todos';
 
 export default function Todo() {
   const [todos, setTodos] = useState('');
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState('');
+  const [message, setMessage] = useState('');
+  // const [input, setInput] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,10 +20,18 @@ export default function Todo() {
   }, []);
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const [data] = await createTodo(task);
-    setTodos((prevState) => [...prevState, data]);
-  }; // add success message here
+    try {
+      e.preventDefault();
+      const [data] = await createTodo(task);
+      setTodos((prevState) => [...prevState, data]);
+      setTask('');
+      setMessage('Successfully added task!');
+    } catch {
+      setMessage('Oh no! Try again!');
+    }
+  };
+
+  // const resetInput = () => {};
 
   // handlesubmit function on form adds a list item to the database
   // use effect to grab the list of to-do items
@@ -37,9 +47,10 @@ export default function Todo() {
         <div>
           <form>
             <label>Enter a task:</label>
-            <input type="text" onChange={(e) => setTask(e.target.value)} />
+            <input type="text" onChange={(e) => setTask(e.target.value)} value={task} />
             <button onClick={handleSubmit}>Save</button>
           </form>
+          {message}
           {todos.map((todo) => (
             <TodoList key={todo.id} {...todo} />
           ))}
