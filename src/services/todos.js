@@ -17,3 +17,9 @@ export async function toggleCompleted(id, is_complete) {
   const resp = await client.from('todos').update({ is_complete }).eq('id', id);
   return checkError(resp);
 }
+
+// function to delete task
+export async function deleteTask(id) {
+  const resp = await client.from('todos').delete().match({ id });
+  return checkError(resp);
+}

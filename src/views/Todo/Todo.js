@@ -1,5 +1,5 @@
 import TodoList from '../../components/TodoList/TodoList';
-import { createTodo, fetchTodos, toggleCompleted } from '../../services/todos';
+import { createTodo, fetchTodos, toggleCompleted, deleteTask } from '../../services/todos';
 import { useEffect, useState } from 'react';
 
 export default function Todo() {
@@ -37,6 +37,11 @@ export default function Todo() {
     setTodos(updatedTodos);
   };
 
+  const handleDelete = async (id) => {
+    await deleteTask(id);
+    const updatedTodos = todos.filter((todo) => id !== todo.id);
+    setTodos(updatedTodos);
+  };
   return (
     <div>
       {loading ? (
@@ -50,7 +55,12 @@ export default function Todo() {
           </form>
           {message}
           {todos.map((todo) => (
-            <TodoList key={todo.id} todo={todo} handleToggle={handleToggle} />
+            <TodoList
+              key={todo.id}
+              todo={todo}
+              handleToggle={handleToggle}
+              handleDelete={handleDelete}
+            />
           ))}
         </div>
       )}
