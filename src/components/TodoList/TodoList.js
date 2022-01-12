@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function TodoList({ task, message }) {
+export default function TodoList({ todo, handleToggle }) {
   return (
     <div>
-      <input type="checkbox" />
-      {task}
+      <input type="checkbox" onChange={() => handleToggle(todo)} checked={todo.is_complete} />
+      {todo.task}
     </div>
   );
 }

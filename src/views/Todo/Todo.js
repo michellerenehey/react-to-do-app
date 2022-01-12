@@ -1,14 +1,12 @@
 import TodoList from '../../components/TodoList/TodoList';
-import { createTodo } from '../../services/todos';
+import { createTodo, fetchTodos, toggleCompleted } from '../../services/todos';
 import { useEffect, useState } from 'react';
-import { fetchTodos } from '../../services/todos';
 
 export default function Todo() {
   const [todos, setTodos] = useState('');
   const [loading, setLoading] = useState(true);
   const [task, setTask] = useState('');
   const [message, setMessage] = useState('');
-  // const [input, setInput] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,13 +29,14 @@ export default function Todo() {
     }
   };
 
-  // const resetInput = () => {};
-
-  // handlesubmit function on form adds a list item to the database
-  // use effect to grab the list of to-do items
-  // map through them to display them on the page
-
-  // handle click on checkbox to mark list item as complete
+  const handleToggle = async (todo) => {
+    const data = await toggleCompleted(todo.id, !todo.is_complete);
+    console.log(data);
+    const updatedTodos = todos.map((item) =>
+      item.id === todo.id ? { ...todo, is_complete: !todo.is_complete } : item
+    );
+    setTodos(updatedTodos);
+  };
 
   return (
     <div>
@@ -52,7 +51,7 @@ export default function Todo() {
           </form>
           {message}
           {todos.map((todo) => (
-            <TodoList key={todo.id} {...todo} />
+            <TodoList key={todo.id} todo={todo} handleToggle={handleToggle} />
           ))}
         </div>
       )}

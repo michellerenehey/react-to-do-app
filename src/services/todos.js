@@ -11,3 +11,9 @@ export async function fetchTodos() {
   const response = await client.from('todos').select('*');
   return checkError(response);
 }
+
+// function to toggle
+export async function toggleCompleted(id, is_complete) {
+  const resp = await client.from('todos').update({ is_complete }).eq('id', id);
+  return checkError(resp);
+}
