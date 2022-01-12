@@ -1,7 +1,10 @@
 import { client, checkError } from './client.js';
 
 // function to get user session
-export async function getUser() {
+// if this is async, it will return a promise, promises are treated as objects (an empty object is truthy)
+// this isn't going to the database, it's just looking at localStorage
+
+export function getUser() {
   return client.auth.session();
 }
 // function to sign up
